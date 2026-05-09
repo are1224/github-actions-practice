@@ -1,0 +1,27 @@
+name: Docker Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Run Was Docker container
+      run: docker run -d -p 9000:8080 --name webapp kubetest:20260427
+    
+    - name: Test Was app
+      run: |
+        sleep 10
+        curl http://127.0.0.1:9000/test/user/user1
+    
+    - name: Stop and remove Docker container
+      run: |
+        docker container stop webapp
+        docker container rm webapp
