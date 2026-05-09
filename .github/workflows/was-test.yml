@@ -12,6 +12,9 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+
+    - name: Docker image pull
+      run: docker pull daisycrown/kubetest_was:20260428
     
     - name: Run Was Docker container
       run: docker run -d -p 9000:8080 --name webapp daisycrown/kubetest:20260428
